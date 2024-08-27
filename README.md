@@ -86,7 +86,7 @@ For cold start, add approximately 800-1000ms. The Lambda is configured with 256 
 | yellow_tripdata_2023-01.parquet       | 54.6 MB  | 3,066,766  | 2.17 s ± 58.8 ms |
 | nyc-yellow-taxi-2023.parquet          | 687.5 MB | 38,310,226 | 24.3 s ± 488 ms  |
 
-To process S3 objects of a big size you can adjust `lambda_ram` variables. Increasing RAM for the lambda increases 
+To process S3 objects of a big size you can adjust `lambda_ram` variable. Increasing RAM for the lambda increases 
 amount of vCPUs provided to the lambda as well. Pay attention that the lambda has to finish in 60 seconds.
 For the same query as above deploying lambda with `terraform apply -var="lambda_ram=8192"`
 will result:
