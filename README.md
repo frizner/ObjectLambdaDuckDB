@@ -80,11 +80,11 @@ For cold start, add approximately 800-1000ms. The Lambda is configured with 256 
 
 **Table 1: Results for `SELECT passenger_count, avg(trip_distance) as avg_distances FROM read_parquet('%s') WHERE passenger_count BETWEEN 1 AND 4 GROUP BY passenger_count` query.**
 
-| Object                                | Size     | Rows       | Duration |
-|---------------------------------------|----------|------------|-----------------|
-| yellow_tripdata_2023-01-small.parquet | 3.2 MB   | 100,000    | 386 ms ± 88.5 ms          |
-| yellow_tripdata_2023-01.parquet       | 54.6 MB  | 3,066,766  | 2.17 s ± 58.8 ms        |
-| nyc-yellow-taxi-2023.parquet          | 687.5 MB | 38,310,226 | 29,392 ms       |
+| Object                                | Size     | Rows       | Duration         |
+|---------------------------------------|----------|------------|------------------|
+| yellow_tripdata_2023-01-small.parquet | 3.2 MB   | 100,000    | 386 ms ± 88.5 ms |
+| yellow_tripdata_2023-01.parquet       | 54.6 MB  | 3,066,766  | 2.17 s ± 58.8 ms |
+| nyc-yellow-taxi-2023.parquet          | 687.5 MB | 38,310,226 | 24.3 s ± 488 ms  |
 
 To process S3 objects of a big size you can adjust `lambda_ram` variables. Increasing RAM for the lambda increases 
 amount of vCPUs provided to the lambda as well. Pay attention that the lambda has to finish in 60 seconds.
@@ -93,9 +93,9 @@ will result:
 
 **Table 1: Processing a big file with increased RAM and ephemeral storage for the lambda**
 
-| Object                        | Size   | Rows        | Duration |
+| Object                        | Size   | Rows        | Duration        |
 |-------------------------------|--------|-------------|-----------------|
-| nyc-yellow-taxi-202x.parquet  | 2.3 GB | 136,484,348 | 15.2 s ± 495 ms       |
+| nyc-yellow-taxi-202x.parquet  | 2.3 GB | 136,484,348 | 15.2 s ± 495 ms |
  
 
 
