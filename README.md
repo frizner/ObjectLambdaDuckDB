@@ -78,23 +78,24 @@ listed for [the warmed lambda](https://docs.aws.amazon.com/lambda/latest/operato
 For cold start, add approximately 800-1000ms. The Lambda is configured with 256 MB of RAM and
 512 MB of ephemeral storage.
 
-Table 1: Results for `SELECT passenger_count, avg(trip_distance) as avg_distances FROM read_parquet('%s') WHERE passenger_count BETWEEN 1 AND 4 GROUP BY passenger_count` query.
+**Table 1: Results for `SELECT passenger_count, avg(trip_distance) as avg_distances FROM read_parquet('%s') WHERE passenger_count BETWEEN 1 AND 4 GROUP BY passenger_count` query.**
 
-| Object                                | Size     | Rows       | Billed Duration |
+| Object                                | Size     | Rows       | Duration |
 |---------------------------------------|----------|------------|-----------------|
-| yellow_tripdata_2023-01-small.parquet | 3.2 MB   | 100,000    | 276 ms          |
-| yellow_tripdata_2023-01.parquet       | 54.6 MB  | 3,066,766  | 2,533 ms        |
+| yellow_tripdata_2023-01-small.parquet | 3.2 MB   | 100,000    | 386 ms ± 88.5 ms          |
+| yellow_tripdata_2023-01.parquet       | 54.6 MB  | 3,066,766  | 2.17 s ± 58.8 ms        |
 | nyc-yellow-taxi-2023.parquet          | 687.5 MB | 38,310,226 | 29,392 ms       |
 
-To process S3 objects of a big size you can adjust `lambda_ram` and `lambda_storage` variables.
-For the same query as above deploying lambda with `terraform apply -var="lambda_ram=1024" -var="lambda_storage=8192"`
+To process S3 objects of a big size you can adjust `lambda_ram` variables. Increasing RAM for the lambda increases 
+amount of vCPUs provided to the lambda as well. Pay attention that the lambda has to finish in 60 seconds.
+For the same query as above deploying lambda with `terraform apply -var="lambda_ram=8192"`
 will result:
 
-Table 1: Processing a big file with increased RAM and ephemeral storage for the lambda
+**Table 1: Processing a big file with increased RAM and ephemeral storage for the lambda**
 
-| Object                        | Size   | Rows        | Billed Duration |
+| Object                        | Size   | Rows        | Duration |
 |-------------------------------|--------|-------------|-----------------|
-| nyc-yellow-taxi-202x.parquet  | 2.3 GB | 136,484,348 | 40,721 ms       |
+| nyc-yellow-taxi-202x.parquet  | 2.3 GB | 136,484,348 | 15.2 s ± 495 ms       |
  
 
 
