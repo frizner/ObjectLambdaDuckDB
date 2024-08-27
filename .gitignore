@@ -1,0 +1,12 @@
+notes.txt
+.ipynb_checkpoints
+tf/.*
+tf/terraform.*
+yellow_tripdata_2023-01-small.parquet
+sandbox.ipynb
+*drawio*
+sandbox.ipynb
+.idea
+lambda/bin/bootstrap
+lambda/objectlambda.zip
+.DS_Store
