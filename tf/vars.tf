@@ -1,7 +1,7 @@
 variable "owner" {
   description = "Owner of a deployment/workload"
   type        = string
-  default     = "dfrizner"
+  default     = "john"
 }
 
 variable "aws_region" {
