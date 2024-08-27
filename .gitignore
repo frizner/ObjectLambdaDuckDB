@@ -9,4 +9,4 @@ sandbox.ipynb
 .idea
 lambda/bin/bootstrap
 lambda/objectlambda.zip
-.DS_Store
+**/.DS_Store
