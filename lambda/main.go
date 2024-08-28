@@ -60,7 +60,8 @@ func main() {
 	defer db.Close()
 	check(db.Ping())
 
-	check(db.ExecContext(context.Background(), "INSTALL httpfs;"))
+	//check(db.ExecContext(context.Background(), "INSTALL httpfs;"))
+	check(db.ExecContext(context.Background(), "SET extension_directory = 'DuckDBExtensions';"))
 	check(db.ExecContext(context.Background(), "LOAD httpfs;"))
 
 	lambda.Start(handler)

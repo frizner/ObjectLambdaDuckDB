@@ -74,8 +74,7 @@ Examples of queries:
 To run tests I used 
 [New York City Taxi and Limousine Commission Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
 for Yellow Taxi. The duration of a lambda execution is
-listed for [the warmed lambda](https://docs.aws.amazon.com/lambda/latest/operatorguide/execution-environments.html).
-For cold start, add approximately 800-1000ms. The Lambda is configured with 256 MB of RAM and
+listed for [the warmed lambda](https://docs.aws.amazon.com/lambda/latest/operatorguide/execution-environments.html). The Lambda is configured with 256 MB of RAM and
 512 MB of ephemeral storage.
 
 **Table 1: Results for `SELECT passenger_count, avg(trip_distance) as avg_distances FROM read_parquet('%s') WHERE passenger_count BETWEEN 1 AND 4 GROUP BY passenger_count` query.**
