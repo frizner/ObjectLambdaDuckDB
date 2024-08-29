@@ -52,7 +52,6 @@ resource "null_resource" "objectlambda_bin" {
     src = md5(file(local.src))
   }
   provisioner "local-exec" {
-#     command = "GOOS=linux GOARCH=arm64 CGO_ENABLED=1 go build -C ${local.lambda_dir} -o ${local.binary_path} main.go"
     command = "CGO_ENABLED=1 go build -C ${local.lambda_dir} -o ${local.binary_path} main.go"
   }
 }

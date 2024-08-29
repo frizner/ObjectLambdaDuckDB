@@ -24,6 +24,8 @@ func handler(ctx context.Context, event events.S3ObjectLambdaEvent) error {
 	}
 	//fmt.Println("header: ", header)
 	sqlQuery := fmt.Sprintf(header, url)
+
+	// run a query and save result to ephemeral storage of lambda
 	sqlCmd := fmt.Sprintf("COPY (%s) TO '/tmp/res.csv';", sqlQuery)
 	//fmt.Println("SQL command: ", sqlCmd)
 
@@ -60,7 +62,9 @@ func main() {
 	defer db.Close()
 	check(db.Ping())
 
-	check(db.ExecContext(context.Background(), "SET extension_directory = 'DuckDBExtensions';"))
+	check(db.ExecContext(context.Background(), "INSTALL httpfs;"))
+	// load the installed extension. another option is to install an extension ^^^
+	//check(db.ExecContext(context.Background(), "SET extension_directory = 'DuckDBExtensions';")) // DuckDBExtensions/v1.0.0/linux_arm64/httpfs.duckdb_extension
 	check(db.ExecContext(context.Background(), "LOAD httpfs;"))
 
 	lambda.Start(handler)
