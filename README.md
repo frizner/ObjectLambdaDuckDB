@@ -54,9 +54,9 @@ from S3. The architecture includes the following AWS services:
 * Supporting S3 Access Point (S3 Control Object Lambda Access Point)
 
 ### How to deploy
-To deploy the solution provide values for variables editing [tf/vars.tf](tf/vars.tf) file or using a command line 
+To deploy the solution, provide values for variables editing [tf/vars.tf](tf/vars.tf) file or using a command line 
 interface; and run [Terraform](https://www.terraform.io/). Since a terraform manifest builds binary of the lambda 
-function with `CGO_ENABLED=1` and run the lambda in `Amazon Linux 2023` runtime on `arm64` architecture; 
+function with `CGO_ENABLED=1` and runs the lambda in `Amazon Linux 2023` runtime on `arm64` architecture; 
 recommended environment to run the terraform manifest is Amazon Linux 2023 on `arm64` architecture.
 For example, you can use EC2 Graviton instance.
 
