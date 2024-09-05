@@ -7,6 +7,8 @@ in S3 buckets leveraging [DuckDB](https://duckdb.org/).
 The solution can be used as alternative to deprecated 
 [Amazon S3 Select](https://docs.aws.amazon.com/AmazonS3/latest/userguide/selecting-content-from-objects.html).
 
+[The blog post](https://www.linkedin.com/pulse/create-alternative-amazon-s3-select-object-lambda-duckdb-frizner-fnjye) for the solution.
+
 ## How to use
 
 You can run SQL queries against data in a S3 bucket sending `GET` request via 
