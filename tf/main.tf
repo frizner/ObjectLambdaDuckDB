@@ -9,7 +9,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "objectlambda-dataset" {
-  bucket = var.bucket_name
+  bucket        = var.bucket_name
   force_destroy = true
 }
 
@@ -40,8 +40,8 @@ resource "aws_iam_role_policy_attachment" "ObjectLambda" {
 }
 
 locals {
-  lambda_dir =  "../lambda"
-  binary_dir = "../lambda/bin/"
+  lambda_dir   = "../lambda"
+  binary_dir   = "../lambda/bin/"
   binary_path  = "bin/bootstrap"
   src          = "../lambda/main.go"
   archive_path = "../lambda/objectlambda.zip"
@@ -52,30 +52,30 @@ resource "null_resource" "objectlambda_bin" {
     src = md5(file(local.src))
   }
   provisioner "local-exec" {
-#     command = "GOOS=linux GOARCH=arm64 CGO_ENABLED=1 go build -C ${local.lambda_dir} -o ${local.binary_path} main.go"
-    command = "CGO_ENABLED=1 go build -C ${local.lambda_dir} -o ${local.binary_path} main.go"
+    command = "GOOS=linux GOARCH=arm64 CGO_ENABLED=1 go build -C ${local.lambda_dir} -o ${local.binary_path} main.go"
+    # command = "CGO_ENABLED=1 go build -C ${local.lambda_dir} -o ${local.binary_path} main.go"
   }
 }
 
 data "archive_file" "objectlambda_zip" {
   depends_on  = [null_resource.objectlambda_bin]
   type        = "zip"
-  source_dir = local.binary_dir
+  source_dir  = local.binary_dir
   output_path = local.archive_path
 }
 
 resource "aws_lambda_function" "ObjectLambda" {
-  function_name    = "ObjectLambda"
-  description      = "Object Lambda to transform s3 object"
-  role             = aws_iam_role.ObjectLambda.arn
-  handler          = "main"
-  filename         = data.archive_file.objectlambda_zip.output_path
-  runtime          = "provided.al2023"
-  memory_size      = var.lambda_ram
+  function_name = "ObjectLambda"
+  description   = "Object Lambda to transform s3 object"
+  role          = aws_iam_role.ObjectLambda.arn
+  handler       = "main"
+  filename      = data.archive_file.objectlambda_zip.output_path
+  runtime       = "provided.al2023"
+  memory_size   = var.lambda_ram
   ephemeral_storage {
     size = var.lambda_storage
   }
-  architectures    = ["arm64"]
+  architectures = ["arm64"]
   # looks like pre-signed URL will expire in 60 secs, therefore no sense to set up the timeout to more than 60 secs.
   timeout          = 60
   source_code_hash = data.archive_file.objectlambda_zip.output_base64sha256
