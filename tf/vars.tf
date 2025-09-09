@@ -1,7 +1,7 @@
 variable "owner" {
   description = "Owner of a deployment/workload"
   type        = string
-  default     = "john"
+  default     = "dfrizner"
 }
 
 variable "aws_region" {
@@ -31,11 +31,11 @@ variable "logs_retention_in_days" {
 variable "lambda_ram" {
   description = "RAM for Object Lambda function"
   type        = number
-  default     = 256
+  default     = 10240
 }
 
 variable "lambda_storage" {
   description = "Storage for Object Lambda function"
   type        = number
-  default     = 512
+  default     = 10240
 }

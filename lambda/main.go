@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
-	_ "github.com/marcboeker/go-duckdb"
+	_ "github.com/marcboeker/go-duckdb/v2"
 	"os"
 )
 
@@ -60,12 +60,15 @@ func main() {
 	defer db.Close()
 	check(db.Ping())
 
-	check(db.ExecContext(context.Background(), "SET extension_directory = 'DuckDBExtensions';"))
+        check(db.ExecContext(context.Background(), "INSTALL httpfs;"))
+	// load the installed extension. another option is to install an extension ^^^
+	// check(db.ExecContext(context.Background(), "SET extension_directory = 'DuckDBExtensions';")) // DuckDBExtensions/v1.2.2/linux_arm64/httpfs.duckdb_extension
 	check(db.ExecContext(context.Background(), "LOAD httpfs;"))
 
 	lambda.Start(handler)
 }
 
+// to recompile 1
 func check(args ...interface{}) {
 	err := args[len(args)-1]
 	if err != nil {
